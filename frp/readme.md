@@ -10,7 +10,8 @@ The version of frp inside image is [v0.50.0](https://github.com/fatedier/frp/rel
 
 ```sh
 docker run \
-  -d --network host \
+  -d \
+  --network host \
   --restart always \
   -v /path/frps.ini:/config/frps.ini \
   --name frps \
@@ -23,7 +24,8 @@ You can specity user using `--user uid:gid`.
 
 ```sh
 docker run \
-  -d --network host \
+  -d \
+  --network host \
   --restart always \
   -v /path/frpc.ini:/config/frpc.ini \
   --name frpc \
