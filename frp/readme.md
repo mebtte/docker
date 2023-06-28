@@ -2,7 +2,7 @@
 
 A docker image for [frp](https://github.com/fatedier/frp) including frps and frpc. For more information, please see [here](https://github.com/mebtte/docker).
 
-The version of frp inside image is [v0.49.0](https://github.com/fatedier/frp/releases/tag/v0.49.0).
+The version of frp inside image is [v0.50.0](https://github.com/fatedier/frp/releases/tag/v0.50.0).
 
 ## Usage
 
