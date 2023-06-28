@@ -14,10 +14,10 @@ if [ $current_version != $latest_version ]; then
   tar -zxvf cache/frp_${latest_version}_linux_386.tar.gz -C cache
 
   mv cache/frp_${latest_version}_linux_386/frps cache
-  docker build -t mebtte/frps -f frp/frps.Dockerfile --push .
+  docker build -t mebtte/frps -f frps.Dockerfile --push .
 
   mv cache/frp_${latest_version}_linux_386/frpc cache
-  docker build -t mebtte/frpc -f frp/frpc.Dockerfile --push .
+  docker build -t mebtte/frpc -f frpc.Dockerfile --push .
 
   # update readme
   sed -i "5s|.*|> Current frp version inside image is [v$latest_version](https://github.com/fatedier/frp/releases/tag/v$latest_version).|" frp/readme.md
