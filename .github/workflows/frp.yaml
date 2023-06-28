@@ -17,6 +17,6 @@ jobs:
       - uses: actions/setup-node@main
       - uses: actions/checkout@main
 
-      - run: ./build_and_push.sh
+      - run: ./frp/build_and_push.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
