@@ -22,3 +22,19 @@ jobs:
       - run: ./frp/build_and_push.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: mebtte/frps
+          short-description: "A docker image for frps."
+          readme-filepath: "./frp/readme.md"
+
+      - uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: mebtte/frpc
+          short-description: "A docker image for frpc."
+          readme-filepath: "./frp/readme.md"
