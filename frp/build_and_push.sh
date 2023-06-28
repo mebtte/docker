@@ -20,8 +20,8 @@ if [ $current_version != $latest_version ]; then
   docker buildx build -t mebtte/frpc -f frpc.Dockerfile --push .
 
   # update readme
-  sed -i "5s|.*|> Current frp version inside image is [v$latest_version](https://github.com/fatedier/frp/releases/tag/v$latest_version).|" readme.md
-  git config --local user.name mebtte
+  sed -i "4s|.*|Current frp version inside image is [v$latest_version](https://github.com/fatedier/frp/releases/tag/v$latest_version).|" readme.md
+  git config --local user.name mebtte.bot
   git config --local user.email hi@mebtte.com
   git add readme.md
   git commit -m "bot: update frp readme"

@@ -1,4 +1,4 @@
-name: build from latest frpc and push
+name: frp
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build_and_push:
+  frp:
     runs-on: ubuntu-latest
     steps:
       - uses: docker/setup-qemu-action@v2
