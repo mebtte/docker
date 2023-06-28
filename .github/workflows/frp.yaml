@@ -14,8 +14,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - uses: actions/setup-node@main
       - uses: actions/checkout@main
 
-      - run: |
-          docker pull mebtte/cicada:beta
-          docker run --rm mebtte/cicada:beta cicada --version
+      - run: ./build_and_push.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
