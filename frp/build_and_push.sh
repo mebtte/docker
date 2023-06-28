@@ -14,16 +14,16 @@ if [ $current_version != $latest_version ]; then
   tar -zxvf cache/frp_${latest_version}_linux_386.tar.gz -C cache
 
   mv cache/frp_${latest_version}_linux_386/frps cache
-  docker build -t mebtte/frps -f frps.Dockerfile --push .
+  docker buildx build -t mebtte/frps -f frps.Dockerfile --push .
 
   mv cache/frp_${latest_version}_linux_386/frpc cache
-  docker build -t mebtte/frpc -f frpc.Dockerfile --push .
+  docker buildx build -t mebtte/frpc -f frpc.Dockerfile --push .
 
   # update readme
   sed -i "5s|.*|> Current frp version inside image is [v$latest_version](https://github.com/fatedier/frp/releases/tag/v$latest_version).|" frp/readme.md
   git config --local user.name mebtte
   git config --local user.email hi@mebtte.com
-  git remote add origin https://$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git
+  git remote add origin https://$GITHUB_TOKEN@github.com/mebtte/docker-images.git
   git add readme.md
   git commit -m "update frp readme"
   git push origin master
