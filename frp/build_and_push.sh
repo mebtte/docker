@@ -29,4 +29,6 @@ if [ $current_version != $latest_version ]; then
   git add readme.md
   git commit -m "bot: update frp readme"
   git push origin master
+else
+  echo 'No need to rebuild'
 fi
