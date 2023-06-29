@@ -27,7 +27,7 @@ if [ $current_version != $latest_version ]; then
   git config --local user.name mebtte.bot
   git config --local user.email hi@mebtte.com
   git add readme.md
-  git commit -m "bot: update frp readme"
+  git commit -m "bot: rebuild frp"
   git push origin master
 else
   echo 'No need to rebuild'
