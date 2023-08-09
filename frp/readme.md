@@ -6,6 +6,8 @@ The version of frp inside image is [v0.51.2](https://github.com/fatedier/frp/rel
 
 ## Usage
 
+You can refer on [frp documentation](https://gofrp.org/docs).
+
 ### frps
 
 ```sh
