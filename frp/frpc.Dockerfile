@@ -1,8 +1,7 @@
-FROM ubuntu
+FROM scratch
 
-COPY cache/frpc /usr/bin/
-VOLUME [ "/config" ]
-CMD frpc -c /config/frpc.ini
+COPY cache/frpc /bin/frpc
+ENTRYPOINT ["/bin/frpc"]
 
 LABEL org.opencontainers.image.title="frpc" \
   org.opencontainers.image.authors="mebtte<hi@mebtte.com>" \

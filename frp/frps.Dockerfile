@@ -1,8 +1,7 @@
-FROM ubuntu
+FROM scratch
 
-COPY cache/frps /usr/bin/
-VOLUME [ "/config" ]
-CMD frps -c /config/frps.ini
+COPY cache/frps /bin/frps
+ENTRYPOINT ["/bin/frps"]
 
 LABEL org.opencontainers.image.title="frps" \
   org.opencontainers.image.authors="mebtte<hi@mebtte.com>" \
