@@ -1,6 +1,6 @@
 # frp
 
-A docker image for [frp](https://github.com/fatedier/frp) including frps and frpc. There is a [github action](https://github.com/mebtte/docker/actions/workflows/frp.yaml) to check frp update and rebuild image if update exist daily. For more information, please see [here](https://github.com/mebtte/docker).
+A docker image for [frp](https://github.com/fatedier/frp) including frps and frpc. There is a [github action](https://github.com/mebtte/docker/actions/workflows/frp.yaml) to check frp update and rebuild image if update exist weekly. For more information, please see [here](https://github.com/mebtte/docker).
 
 The version of frp inside image is [v0.51.2](https://github.com/fatedier/frp/releases/tag/v0.51.2).
 
