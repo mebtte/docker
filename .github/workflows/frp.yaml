@@ -1,11 +1,11 @@
 name: frp
 
 on:
-  push:
-    branches:
-      - master
-  # schedule:
-  #   - cron: "0 0 * * 1"
+  # push:
+  #   branches:
+  #     - master
+  schedule:
+    - cron: "0 0 * * 1"
 
 jobs:
   frp:
@@ -18,9 +18,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - uses: actions/setup-node@main
-      - uses: actions/checkout@main
 
-      - run: |
+      - name: "get current version and latest version"
+        run: |
           docker pull mebtte/frps
           CURRENT_VERSION=$(docker run --rm mebtte/frps -v)
           echo CURRENT_VERSION=$CURRENT_VERSION >> $GITHUB_ENV
@@ -31,6 +31,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        uses: actions/checkout@main
+
+      - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        name: "download and decompress latest version of frp"
         working-directory: ./frp
         run: |
           mkdir -p cache
@@ -40,18 +44,21 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        name: "frps build and push"
         working-directory: ./frp
         run: |
           mv cache/frp_${{env.LATEST_VERSION}}_linux_386/frps cache
           docker buildx build -t mebtte/frps -f frps.Dockerfile --push .
 
       - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        name: "frpc build and push"
         working-directory: ./frp
         run: |
           mv cache/frp_${{env.LATEST_VERSION}}_linux_386/frpc cache
           docker buildx build -t mebtte/frpc -f frpc.Dockerfile --push .
 
       - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        name: "update docker readme of frps"
         uses: peter-evans/dockerhub-description@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -61,6 +68,7 @@ jobs:
           readme-filepath: "./frp/readme.md"
 
       - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        name: "update docker readme of frpc"
         uses: peter-evans/dockerhub-description@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
