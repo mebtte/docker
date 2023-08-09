@@ -34,21 +34,21 @@ jobs:
         working-directory: ./frp
         run: |
           mkdir -p cache
-          gh release download v${env.LATEST_VERSION} -D cache -p '*linux_386*' --repo fatedier/frp --skip-existing
-          tar -zxvf cache/frp_${env.LATEST_VERSION}_linux_386.tar.gz -C cache
+          gh release download v${{env.LATEST_VERSION}} -D cache -p '*linux_386*' --repo fatedier/frp --skip-existing
+          tar -zxvf cache/frp_${{env.LATEST_VERSION}}_linux_386.tar.gz -C cache
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - if: env.CURRENT_VERSION != env.LATEST_VERSION
         working-directory: ./frp
         run: |
-          mv cache/frp_${env.LATEST_VERSION}_linux_386/frps cache
+          mv cache/frp_${{env.LATEST_VERSION}}_linux_386/frps cache
           docker buildx build -t mebtte/frps -f frps.Dockerfile --push .
 
       - if: env.CURRENT_VERSION != env.LATEST_VERSION
         working-directory: ./frp
         run: |
-          mv cache/frp_${env.LATEST_VERSION}_linux_386/frpc cache
+          mv cache/frp_${{env.LATEST_VERSION}}_linux_386/frpc cache
           docker buildx build -t mebtte/frpc -f frpc.Dockerfile --push .
 
       - if: env.CURRENT_VERSION != env.LATEST_VERSION
