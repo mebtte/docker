@@ -2,7 +2,7 @@ name: frp
 
 on:
   schedule:
-    - cron: "0 0 * * 7"
+    - cron: "0 0 * * 1"
 
 jobs:
   frp:
