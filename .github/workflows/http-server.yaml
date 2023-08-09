@@ -1,11 +1,11 @@
 name: http-server
 
 on:
-  push:
-    branches:
-      - master
-  # schedule:
-  #   - cron: "0 0 * * 1"
+  # push:
+  #   branches:
+  #     - master
+  schedule:
+    - cron: "0 0 * * 1"
 
 jobs:
   http-server:
