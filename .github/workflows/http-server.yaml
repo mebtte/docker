@@ -1,0 +1,47 @@
+name: http-server
+
+on:
+  push:
+    branches:
+      - master
+  # schedule:
+  #   - cron: "0 0 * * 1"
+
+jobs:
+  http-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker/setup-qemu-action@v2
+      - uses: docker/setup-buildx-action@v2
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: actions/setup-node@main
+
+      - name: "get current version and latest version"
+        run: |
+          docker pull mebtte/http-server
+          CURRENT_VERSION=$(docker run --rm mebtte/http-server -v)
+          echo CURRENT_VERSION=$CURRENT_VERSION >> $GITHUB_ENV
+          LATEST_VERSION=$(npx http-server -v)
+          echo LATEST_VERSION=$LATEST_VERSION >> $GITHUB_ENV
+
+      - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        uses: actions/checkout@main
+
+      - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        name: "build and push"
+        working-directory: ./http-server
+        run: |
+          docker buildx build -t mebtte/http-server -f Dockerfile --push .
+
+      - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        name: "update docker readme"
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: mebtte/http-server
+          short-description: "A docker image for http-server."
+          readme-filepath: "./http-server/readme.md"
