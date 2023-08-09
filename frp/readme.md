@@ -16,6 +16,7 @@ docker run \
   -v /path/frps.ini:/config/frps.ini \
   --name frps \
   mebtte/frps
+  -c /config/frps.ini
 ```
 
 You can specity user using `--user uid:gid`.
@@ -30,6 +31,7 @@ docker run \
   -v /path/frpc.ini:/config/frpc.ini \
   --name frpc \
   mebtte/frpc
+  -c /config/frpc.ini
 ```
 
 You can specity user using `--user uid:gid`.

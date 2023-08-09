@@ -1,8 +1,11 @@
 name: frp
 
 on:
-  schedule:
-    - cron: "0 0 * * 1"
+  push:
+    branches:
+      - master
+  # schedule:
+  #   - cron: "0 0 * * 1"
 
 jobs:
   frp:
@@ -14,15 +17,38 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
       - uses: actions/setup-node@main
       - uses: actions/checkout@main
 
-      - run: ./frp/build_and_push.sh
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - run: |
+          docker pull mebtte/frps
+          CURRENT_VERSION=$(docker run --rm mebtte/frps -v)
+          echo $CURRENT_VERSION >> $GITHUB_ENV
+          LATEST_DESC=$(gh release list --repo fatedier/frp -L 50 --exclude-drafts --exclude-pre-releases | grep -i latest)
+          LATEST_VERSION=$(node -e "console.log('$LATEST_DESC'.split(/\s/)[0].replace('v',''))")
+          echo $LATEST_VERSION >> $GITHUB_ENV
 
-      - uses: peter-evans/dockerhub-description@v3
+      - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        working-directory: ./frp
+        run: |
+          mkdir -p cache
+          gh release download v${env.LATEST_VERSION} -D cache -p '*linux_386*' --repo fatedier/frp --skip-existing
+          tar -zxvf cache/frp_${env.LATEST_VERSION}_linux_386.tar.gz -C cache
+
+      - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        working-directory: ./frp
+        run: |
+          mv cache/frp_${env.LATEST_VERSION}_linux_386/frps cache
+          docker buildx build -t mebtte/frps -f frps.Dockerfile --push .
+
+      - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        working-directory: ./frp
+        run: |
+          mv cache/frp_${env.LATEST_VERSION}_linux_386/frpc cache
+          docker buildx build -t mebtte/frpc -f frpc.Dockerfile --push .
+
+      - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        uses: peter-evans/dockerhub-description@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -30,7 +56,8 @@ jobs:
           short-description: "A docker image for frps."
           readme-filepath: "./frp/readme.md"
 
-      - uses: peter-evans/dockerhub-description@v3
+      - if: env.CURRENT_VERSION != env.LATEST_VERSION
+        uses: peter-evans/dockerhub-description@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
