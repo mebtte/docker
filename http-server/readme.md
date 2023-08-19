@@ -20,7 +20,6 @@ docker run \
 You can specify user by `--user uid:gid`. Also you can use docker compose like below:
 
 ```yml
-version: "3"
 services:
   http-server:
     restart: always

@@ -22,7 +22,6 @@ docker run \
 You can specify user by `--user uid:gid`. Also you can use docker compose like below:
 
 ```yml
-version: "3"
 services:
   frps:
     restart: always
@@ -51,7 +50,6 @@ docker run \
 You can specity user using `--user uid:gid`. Also you can use docker compose like below:
 
 ```yml
-version: "3"
 services:
   frpc:
     restart: unless-stopped
