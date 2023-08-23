@@ -11,10 +11,10 @@ docker run \
   -d \
   --restart always \
   -v /path/data:/data:ro \
-  -p 80:8080
+  -p 80:8080 \
   --name http-server \
-  mebtte/http-server
-   /data -p 8080 --gzip
+  mebtte/http-server \
+  /data -p 8080 --gzip
 ```
 
 You can specify user by `--user uid:gid`. Also you can use docker compose like below:

@@ -15,7 +15,7 @@ docker run \
   --restart always \
   -v /path/frps.ini:/config/frps.ini \
   --name frps \
-  mebtte/frps
+  mebtte/frps \
   -c /config/frps.ini
 ```
 
@@ -43,7 +43,7 @@ docker run \
   --restart always \
   -v /path/frpc.ini:/config/frpc.ini \
   --name frpc \
-  mebtte/frpc
+  mebtte/frpc \
   -c /config/frpc.ini
 ```
 
