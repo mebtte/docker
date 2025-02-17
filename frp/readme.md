@@ -13,10 +13,10 @@ docker run \
   -d \
   --network host \
   --restart always \
-  -v /path/frps.ini:/config/frps.ini \
+  -v /path/frps.toml:/config/frps.toml \
   --name frps \
   mebtte/frps \
-  -c /config/frps.ini
+  -c /config/frps.toml
 ```
 
 You can specify user by `--user uid:gid`. Also you can use docker compose like below:
@@ -30,8 +30,8 @@ services:
     image: mebtte/frps
     network_mode: host
     volumes:
-      - /path/config.ini:/config/frps.ini:ro
-    command: -c /config/frps.ini
+      - /path/config.toml:/config/frps.toml:ro
+    command: -c /config/frps.toml
 ```
 
 ### frpc
@@ -41,10 +41,10 @@ docker run \
   -d \
   --network host \
   --restart always \
-  -v /path/frpc.ini:/config/frpc.ini \
+  -v /path/frpc.toml:/config/frpc.toml \
   --name frpc \
   mebtte/frpc \
-  -c /config/frpc.ini
+  -c /config/frpc.toml
 ```
 
 You can specity user using `--user uid:gid`. Also you can use docker compose like below:
@@ -58,6 +58,6 @@ services:
     image: mebtte/frpc
     network_mode: host
     volumes:
-      - /path/config.ini:/config/frpc.ini:ro
-    command: -c /config/frpc.ini
+      - /path/config.toml:/config/frpc.toml:ro
+    command: -c /config/frpc.toml
 ```
