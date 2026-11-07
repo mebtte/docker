@@ -11,3 +11,4 @@ All of images check update termly and rebuild if update exist.
 ## Images built from other repository
 
 - [cicada](https://github.com/mebtte/cicada)
+- [rate](https://github.com/mebtte/rate)
