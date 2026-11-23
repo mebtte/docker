@@ -12,3 +12,4 @@ All of images check update termly and rebuild if update exist.
 
 - [cicada](https://github.com/mebtte/cicada): music service
 - [rate](https://github.com/mebtte/rate): speed test service
+- [pigeon](https://github.com/mebtte/pigeon): file sharing service
